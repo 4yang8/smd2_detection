@@ -1,0 +1,1 @@
+{"language": "ko", "language_probability": 1, "duration": 0.96, "segments": [{"id": 1, "start": 0.0, "end": 1.0, "text": "\uac10\uc0ac\ud569\ub2c8\ub2e4."}], "transcription": "\uac10\uc0ac\ud569\ub2c8\ub2e4.", "started_at": "2025-10-16T06:57:18.328384Z", "started_at_kst": "2025-10-16T15:57:18.328384+09:00", "processing_time_seconds": 0.20424520500000654}

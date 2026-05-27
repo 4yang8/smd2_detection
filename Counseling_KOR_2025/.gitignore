@@ -1,0 +1,7 @@
+sh/
+test.py
+test.ipynb
+log/
+.vscode/
+models/
+__pycache__/

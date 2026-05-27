@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<style>
+		.chat-bubble {
+			white-space: pre-line;
+		}
+	</style>
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+		rel="stylesheet">
+	<!-- Standard Meta for Site Properties -->
+	<meta charset="UTF-8" />
+	<title>chatbot</title>
+	<meta name="description" content="폴라이프는 경찰관의 건강을 지속적으로 관리해주며 공상입증 및 질병예방을 위한 건강관리 서비스입니다." />
+	<meta name="keywords" content="폴라이프, POLIFE, 경찰, 헬스케어, 건강 데이터, 건강관리, 챗봇" />
+	<meta name="author" content="폴라이프 연구사업단, helpdesk.polife@gmail.com" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<link rel="canonical" href="http://www.polife.re.kr" />
+	<link rel="shortcut icon" type="image/x-icon" href="../../assets/img/icon/favicon.ico" />
+	<!-- IE Meta -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<!-- Opengraph Meta -->
+	<meta property="og:url" content="http://www.polife.re.kr" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="POLIFE :: 경찰관 직무맞춤형 건강관리 플랫폼" />
+	<meta property="og:description" content="폴라이프는 경찰관의 건강을 지속적으로 관리해주며 공상입증 및 질병예방을 위한 건강관리 서비스입니다." />
+	<meta property="og:image" content="../../assets/img/icon/icon-opengraph.png" />
+	<!-- Apple Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	<meta name="format-detection" content="telephone=no, address=no, email=no" />
+	<link rel="apple-touch-icon-precomposed" href="../../assets/img/icon/touch-icon-iphone-retina.png" />
+	<link rel="apple-touch-icon" href="../../assets/img/icon/touch-icon-iphone.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="../../assets/img/icon/touch-icon-ipad.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/icon/touch-icon-iphone-retina.png" />
+	<link rel="apple-touch-icon" sizes="167x167" href="../../assets/img/icon/touch-icon-ipad-retina.png" />
+	<!-- Core CSS -->
+	<link rel="stylesheet" href="../../assets/css/core/bootstrap.css" />
+	<link rel="stylesheet" href="../../assets/css/core/base.css" />
+	<link rel="stylesheet" href="../../assets/css/core/layout.css" />
+	<link rel="stylesheet" href="../../assets/css/core/common.css" />
+	<link rel="stylesheet" href="../../assets/css/core/animate.css" />
+	<!-- Custom CSS for this theme -->
+	<link rel="stylesheet" href="../../assets/css/core/simplebar.css" />
+	<link rel="stylesheet" href="../../assets/css/theme/page-main.css" />
+	<!-- Bootstrap Core JavaScript -->
+	<script src="../../assets/js/core/jquery-3.5.1.min.js"></script>
+	<script src="../../assets/js/core/jquery-ui-1.12.1.min.js"></script>
+	<script src="../../assets/js/core/popper.min.js"></script>
+	<script src="../../assets/js/core/bootstrap.min.js"></script>
+	<!-- Plugin JavaScript -->
+	<script src="../../assets/js/core/simplebar.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+	<!-- Face Detection -->
+	<script defer src="../../assets/js/face-api.min.js"></script>
+	<script defer src="../../assets/js/detect.js"></script>
+
+	<script src="../../assets/js/core/clipboard.min.js"></script>
+	<script src="../../assets/js/app.js" defer></script>
+</head>
+
+<body id="pageTop">
+	<div id="pageContainer" class="page-container page-chatbot">
+		<div class="wrapper">
+			<!-- [MAIN] -->
+			<main id="mainContainer" class="main-container">
+				<div class="main-body">
+					<div class="row g-0">
+						<!-- [RIGHT] -->
+						<div id="rightContainer" class="col right-sub-container">
+							<!-- [SECTION : video] -->
+							<section class="section-container video-section">
+								<p id="mic-status" style="display: none;">mic button released</p>
+								<div class="main-body-camera">
+									<video width="1080" height="720" id="video" style="display: none;" autoplay></video>
+									<div class="col-12 text-center justify-content-center" style="display: flex;"
+										id="cameraHolder">
+										<div class="ratio ratio-45x30">
+											<canvas id="imageHolder" width="1080" height="720"></canvas>
+										</div>
+									</div>
+									<div class="col-12 text-center justify-content-center" style="display: none;"
+										id="cameraHolder">
+										<div class="ratio ratio-45x30">
+											<canvas id="imageHolder2" width="720" height="720"></canvas>
+										</div>
+									</div>
+								</div>
+							</section>
+							<!--// [SECTION] -->
+						</div>
+
+						<!-- [LEFT] -->
+						<div id="leftContainer" class="col-auto left-sub-container">
+							<!-- [SECTION : chatbot] -->
+							<section class="section-container chatbot-section">
+								<div class="container">
+									<div class="section-body">
+										<div class="row g-0">
+											<div class="col">
+												<!-- panel -->
+												<section class="panel-container chat-panel">
+													<header class="panel-header">
+														<div class="header-heading">
+															<h3>마음 건강 상태 상담</h3>
+														</div>
+													</header>
+													<div class="panel-body">
+
+														<!-- 로그 컨테이너 -->
+														<div class="chat-container" id="overall-container"
+															data-simplebar>
+															<div class="simplebar-content" id="chat-log">
+																<!-- 초기 챗봇 인사 (정적) -->
+																<div class="block-group chatbot-block">
+																	<div class="profile">
+																		<div class="img-profile">
+																			<svg width="48" height="48"
+																				viewBox="0 0 50 50" fill="none"
+																				xmlns="http://www.w3.org/2000/svg">
+																				<defs>
+																					<path id="shapeSquircle"
+																						d="M50 25C50 43.4095 43.4095 50 25 50C6.59051 50 0 43.4095 0 25C0 6.59051 6.59051 0 25 0C43.4095 0 50 6.59051 50 25Z">
+																					</path>
+																					<clippath id="clipSquircle">
+																						<use
+																							xlink:href="#shapeSquircle" />
+																					</clippath>
+																				</defs>
+																				<image width="100%" height="100%"
+																					preserveAspectRatio="xMidYMid slice"
+																					clip-path="url(#clipSquircle)"
+																					xlink:href="../../assets/img/profile-bot.png" />
+																			</svg>
+																		</div>
+																	</div>
+																	<div class="chat-group">
+																		<div class="chat">
+																			<div class="chat-bubble">안녕하세요. 오늘 무슨 이야기를
+																				하고 싶으신가요?</div>
+																		</div>
+																		<time id="chat-time">PM 00:00</time>
+																	</div>
+																	<script>
+																		(function () {
+																			const t = document.getElementById("chat-time");
+																			const d = new Date(); let h = d.getHours(), m = String(d.getMinutes()).padStart(2, '0');
+																			const ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; t.setAttribute("datetime", d.toISOString());
+																			t.textContent = `${ampm} ${h}:${m}`;
+																		})();
+																	</script>
+																</div>
+															</div>
+														</div>
+
+														<!-- 입력/버튼 영역 -->
+														<div class="form-container">
+															<fieldset>
+																<div class="row">
+																	<div class="col text-col">
+																		<div class="form-group">
+																			<div class="controls input-group">
+																				<input type="text" id="chat-box"
+																					class="form-control"
+																					placeholder="Type your message…" />
+																				<button id="send-button" type="button"
+																					class="btn btn-icon btn-append"
+																					onclick="ChatApp.sendMessage()">
+																					<i class="im im-send-filled"></i>
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-auto voice-col">
+																		<div class="form-group">
+																			<div class="controls">
+																				<button id="mic-button"
+																					class="btn btn-icon btn-mic"
+																					aria-label="Start voice input"
+																					onclick="ChatApp.toggleRecording()">
+																					<!-- mic svg -->
+																					<svg xmlns="http://www.w3.org/2000/svg"
+																						width="24" height="24"
+																						viewBox="0 0 24 24"
+																						style="fill:black; background:white;">
+																						<path class="mic"
+																							d="M12 14a3 3 0 003-3V5a3 3 0 10-6 0v6a3 3 0 003 3z" />
+																						<path class="mic"
+																							d="M19 11a1 1 0 10-2 0 5 5 0 01-10 0 1 1 0 10-2 0 7 7 0 006 6.93V21H9a1 1 0 100 2h6a1 1 0 100-2h-2v-3.07A7 7 0 0019 11z" />
+																					</svg>
+																				</button>
+
+																				<!-- 필요하면 유지 -->
+																				<div id="formats" hidden>Format: start
+																					recording to see sample rate</div>
+																				<ol id="recordingsList" hidden
+																					style="transform: rotate(180deg);">
+																				</ol>
+																				<script
+																					src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</fieldset>
+														</div>
+
+														<!-- 캔버스(이미지 전송용) -->
+														<canvas id="imageHolder2" width="0" height="0"
+															style="display:none;"></canvas>
+
+														<!-- ===== 템플릿: 말풍선/로딩 ===== -->
+														<template id="tpl-user-bubble">
+															<div class="block-group user-block">
+																<div class="chat-group">
+																	<div class="chat">
+																		<div class="chat-bubble" data-text></div>
+																	</div>
+																	<time data-time></time>
+																</div>
+															</div>
+														</template>
+
+														<template id="tpl-bot-bubble">
+															<div class="block-group chatbot-block">
+																<div class="profile">
+																	<div class="img-profile">
+																		<!-- 동일한 프로필 SVG -->
+																		<svg width="48" height="48" viewBox="0 0 50 50"
+																			fill="none"
+																			xmlns="http://www.w3.org/2000/svg">
+																			<defs>
+																				<path id="shapeSquircle_t"
+																					d="M50 25C50 43.4095 43.4095 50 25 50C6.59051 50 0 43.4095 0 25C0 6.59051 6.59051 0 25 0C43.4095 0 50 6.59051 50 25Z">
+																				</path>
+																				<clippath id="clipSquircle_t">
+																					<use
+																						xlink:href="#shapeSquircle_t" />
+																				</clippath>
+																			</defs>
+																			<image width="100%" height="100%"
+																				preserveAspectRatio="xMidYMid slice"
+																				clip-path="url(#clipSquircle_t)"
+																				xlink:href="../../assets/img/profile-bot.png" />
+																		</svg>
+																	</div>
+																</div>
+																<div class="chat-group">
+																	<div class="chat">
+																		<div class="chat-bubble" data-text></div>
+																	</div>
+																	<time data-time></time>
+																</div>
+															</div>
+														</template>
+
+														<template id="tpl-typing">
+															<div class="block-group chatbot-block" data-temp="typing">
+																<div class="profile">
+																	<div class="img-profile">
+																		<svg width="48" height="48" viewBox="0 0 50 50"
+																			fill="none"
+																			xmlns="http://www.w3.org/2000/svg">
+																			<defs>
+																				<path id="shapeSquircle_typing"
+																					d="M50 25C50 43.4095 43.4095 50 25 50C6.59051 50 0 43.4095 0 25C0 6.59051 6.59051 0 25 0C43.4095 0 50 6.59051 50 25Z" />
+																				<clipPath id="clipSquircle_typing">
+																					<use href="#shapeSquircle_typing"
+																						xlink:href="#shapeSquircle_typing" />
+																				</clipPath>
+																			</defs>
+																			<image width="100%" height="100%"
+																				preserveAspectRatio="xMidYMid slice"
+																				clip-path="url(#clipSquircle_typing)"
+																				href="../../assets/img/profile-bot.png"
+																				xlink:href="../../assets/img/profile-bot.png" />
+																		</svg>
+																	</div>
+																</div>
+
+																<div class="chat-group">
+																	<div class="chat">
+																		<div class="chat-bubble">
+																			<div class="typing-indicator">
+																				<span></span><span></span><span></span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</template>
+
+
+														<!-- 앱 스크립트만 로드 -->
+														<script defer src="../../assets/js/detect.js"></script>
+														<script src="/js/app.js" defer></script>
+
+													</div>
+												</section>
+												<!--// panel -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<!--// [SECTION] -->
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+</body>
+
+</html>

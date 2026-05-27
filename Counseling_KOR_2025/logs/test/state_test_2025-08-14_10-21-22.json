@@ -1,0 +1,31 @@
+{
+  "cesd_info": {},
+  "chat_mode": "dial_cesd",
+  "cesd_count": 0,
+  "cesd_num": 6,
+  "terminate": false,
+  "phase": "exploration",
+  "phase_turn": 3,
+  "score": null,
+  "history_phase": "user: 안녕하세요.\nCounselor: 편안한 분위기에서 이야기 나누고 싶으신가요? 무엇부터 말씀하시면 좋을까요?\nuser: 저 너무 우울해서 왔어요",
+  "persona": {},
+  "history": [
+    {
+      "role": "User",
+      "text": "안녕하세요."
+    },
+    {
+      "role": "Counselor",
+      "text": "편안한 분위기에서 이야기 나누고 싶으신가요? 무엇부터 말씀하시면 좋을까요?"
+    },
+    {
+      "role": "User",
+      "text": "저 너무 우울해서 왔어요"
+    },
+    {
+      "role": "Counselor",
+      "text": "최근 1주 동안 며칠이나 우울하셨나요?\n"
+    }
+  ],
+  "time": "2025-08-14 10:21:22"
+}

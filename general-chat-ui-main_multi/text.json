@@ -1,0 +1,17 @@
+{
+    "language": "ko",
+    "language_probability": 1,
+    "duration": 2.76,
+    "segments": [
+        {
+            "id": 1,
+            "start": 0.0,
+            "end": 2.7600000000000002,
+            "text": "\uc548\ub155\ud558\uc138\uc694",
+        }
+    ],
+    "transcription": "\uc548\ub155\ud558\uc138\uc694",
+    "started_at": "2025-10-16T06:41:30.631500Z",
+    "started_at_kst": "2025-10-16T15:41:30.631500+09:00",
+    "processing_time_seconds": 0.19889993300012065,
+}
